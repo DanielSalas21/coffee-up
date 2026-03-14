@@ -27,12 +27,13 @@ model Drink {
 }
 
 model Order {
-  id             String @id @default(cuid())
+  id             String       @id @default(cuid())
   userId         String
-  user           User   @relation(fields: [userId], references: [id])
-  selectedDrink  String @db.VarChar(50)
-  drink          Drink? @relation(fields: [selectedDrink], references: [name])
-  customizations Json   @db.Json
+  user           User         @relation(fields: [userId], references: [id])
+  selectedDrink  String       @db.VarChar(50)
+  drink          Drink?       @relation(fields: [selectedDrink], references: [name])
+  customizations Json         @db.Json
+  status         ORDER_STATUS @default(IN_PROGRESS)
 }
 
 model Recipe {
@@ -49,4 +50,9 @@ model RecipeIngredients {
   amount     Int
   unit       String @db.VarChar(10)
   recipe     Recipe @relation(fields: [recipeId], references: [id])
+}
+
+enum ORDER_STATUS {
+  IN_PROGRESS
+  FULFILLED
 }
