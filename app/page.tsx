@@ -10,7 +10,7 @@ export default function Home() {
   // const [name, setName] = useState<string | null>(null);
 
   return (
-    <div className='h-screen flex items-center justify-center'>
+    <div className='h-svh flex items-center justify-center'>
       {isOrdering && <Identify />}
 
       {!isOrdering && <Start setIsOrdering={setIsOrdering} />}
