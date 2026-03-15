@@ -56,3 +56,9 @@ enum ORDER_STATUS {
   IN_PROGRESS
   FULFILLED
 }
+
+model Rsvp {
+  id        String  @id @default(cuid())
+  name      String  @unique @db.VarChar(30)
+  confirmed Boolean
+}

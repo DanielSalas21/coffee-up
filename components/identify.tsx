@@ -11,7 +11,7 @@ export default function Identify({ setName }: { setName: React.Dispatch<React.Se
         e.preventDefault();
         // Access form data directly from event target
         const formData = new FormData(e.currentTarget);
-        const formValues = Object.fromEntries(formData.entries()) as { name: string };
+        const formValues = Object.fromEntries(formData.entries());
 
         try {
             const data = identifyFormSchema.safeParse(formValues);
