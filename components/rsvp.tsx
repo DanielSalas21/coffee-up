@@ -26,7 +26,7 @@ export default function RSVP({ onClose }: { onClose: () => void }) {
                 if (res.success) {
                     setIsConfirmed(true);
 
-                    await Promise.resolve(setTimeout(onClose, 2000)); //Close modal after 2 seconds
+                    await Promise.resolve(setTimeout(onClose, 3500)); //Close modal after 3.5 seconds
                 }
             } else {
                 console.log(data.error)
