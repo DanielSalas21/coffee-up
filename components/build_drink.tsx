@@ -76,7 +76,7 @@ export default function BuildDrink({ name }: { name: string }) {
         <div className="flex flex-col gap-y-4 max-w-10/12">
             {
                 // Step 1. Base drink
-                currentStep === 'baseDrink' && <BaseDrink name={name} nextStep={handleNextStep} value={formData.selectedDrink} updateValue={updateFormData} baseDrinkChange={handleBaseDrinkChange} choseMilkDrink={formData.milkDrink} />
+                currentStep === 'baseDrink' && <BaseDrink name={name} nextStep={handleNextStep} value={formData.selectedDrink} updateValue={updateFormData} baseDrinkChange={handleBaseDrinkChange} choseMilkDrink={formData.milkDrink} isDrinkSelected={!!formData.selectedDrink} />
             }
             {
                 // Step 2. Milk choice - optional

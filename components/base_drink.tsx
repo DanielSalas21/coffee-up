@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-export default function BaseDrink({ name, nextStep, value, updateValue, choseMilkDrink, baseDrinkChange }: { name: string, nextStep: (step: string) => void, value: string | null, updateValue: (field: string, value: boolean | string) => void, choseMilkDrink: boolean | null; baseDrinkChange: (drink: string) => void }) {
+export default function BaseDrink({ name, nextStep, value, updateValue, choseMilkDrink, baseDrinkChange, isDrinkSelected }: { name: string, nextStep: (step: string) => void, value: string | null, updateValue: (field: string, value: boolean | string) => void, choseMilkDrink: boolean | null; baseDrinkChange: (drink: string) => void; isDrinkSelected: boolean | null }) {
 
     const [isMilkDrink, setIsMilkDrink] = useState<boolean | null>(choseMilkDrink);
     const [isHotAndCold, setIsHotAndCold] = useState<boolean | null>(null);
@@ -101,7 +101,7 @@ export default function BaseDrink({ name, nextStep, value, updateValue, choseMil
                     </div>
                 </div>
             </div>
-            <button type='button' className='px-4 py-1 bg-main text-white font-semibold tracking-wide rounded-lg w-fit self-end' onClick={() => {
+            <button hidden={!isDrinkSelected} type='button' className='px-4 py-1 bg-main text-white font-semibold tracking-wide rounded-lg w-fit self-end' onClick={() => {
                 if (isMilkDrink) { nextStep('milkChoice'); return }
                 if (isHotAndCold) { nextStep('temperature'); return }
                 if (!isMilkDrink && !isHotAndCold && hasAddOns) { nextStep('addOns'); return }
