@@ -1,123 +1,101 @@
+'use client'
+
+import { useState } from "react";
+import BaseDrink from "./base_drink";
+import MilkChoice from "./milk_choice";
+import HotOrCold from "./hot_or_cold";
+import AddOns from "./add_ons";
+import ConfirmOrder from "./confirm_order";
+import AllDone from "./all_done";
+
 export default function BuildDrink({ name }: { name: string }) {
 
-    // const handleChange() {
+    const [currentStep, setCurrentStep] = useState<string>('baseDrink');
+    const [formData, setFormData] = useState<{
+        selectedDrink: null | string,
+        temperature: null | string,
+        milkChoice: null | string,
+        customizations: string[],
+        hotAndCold: null | boolean,
+        milkDrink: null | boolean,
+        hasAddOns: null | boolean,
+    }>(
+        {
+            selectedDrink: null,
+            temperature: null,
+            milkChoice: null,
+            customizations: [],
+            hotAndCold: null,
+            milkDrink: null,
+            hasAddOns: null,
+        }
+    )
 
-    // }
+    function handleNextStep(step: string) {
+        setCurrentStep(step);
+    }
+
+    function handlePreviousStep(step: string) {
+        setCurrentStep(step);
+    }
+
+    function handleBaseDrinkChange(selectedDrink: string | null) {
+        setFormData({
+            selectedDrink,
+            temperature: null,
+            milkChoice: null,
+            customizations: [],
+            hotAndCold: true,
+            milkDrink: true,
+            hasAddOns: null,
+        });
+    };
+
+    function updateFormData(field: string, value: boolean | string) {
+        setFormData(prev => ({ ...prev, [field]: value }))
+    }
+
+    function toggleCustomization(addOn: string) {
+
+        setFormData(prev => {
+            if (prev.customizations.includes(addOn)) {
+                return {
+                    ...prev,
+                    customizations: prev.customizations.filter(c => c !== addOn)
+                }
+            }
+
+            return {
+                ...prev,
+                customizations: [...prev.customizations, addOn]
+            }
+        });
+    }
 
     return (
         <div className="flex flex-col gap-y-4 max-w-10/12">
-            <h1 className='text-main text-3xl font-bold'>
-                Hola <a className='capitalize'>{`${name}`}</a>! Qué tomas hoy?
-            </h1>
-            <div>
-                <form className='flex flex-col gap-y-4'>
-                    {/* Base drink choice */}
-                    <div>
-                        <h2 className='text-main text-md font-semibold'>Elige tu bebida:</h2>
-                        <div className='flex justify-between gap-x-6 my-2'>
-                            <div className='flex flex-col gap-y-2'>
-                                <h3 className='text-main text-xs italic'>Signature drinks</h3>
-                                <div className='flex items-start gap-x-0.5'>
-                                    <input type='radio' name='drink' className='mt-1.5' />
-                                    <label htmlFor="drink" className='text-main p-0 m-0'>
-                                        Hufflepuff
-                                    </label>
-                                </div>
-                                <div className='flex items-start gap-x-0.5'>
-                                    <input type='radio' name='drink' className='mt-1.5' />
-                                    <label htmlFor="drink" className='text-main flex gap-x-1'>
-                                        Danielol
-                                    </label>
-                                </div>
-                                <div className="flex items-start gap-x-0.5">
-                                    <input type='radio' name='drink' className='mt-1.5' />
-                                    <label htmlFor="drink" className='text-main flex gap-x-1'>
-                                        (Lat)te pusiste rojo
-                                    </label>
-                                </div>
-                            </div>
-                            <div className='flex flex-col gap-y-2'>
-                                <h3 className='text-main text-xs italic'>Con café</h3>
-                                <div className='flex items-start gap-x-0.5'>
-                                    <input type='radio' name='drink' className='mt-1.5' />
-                                    <label htmlFor="drink" className='text-main p-0 m-0'>
-                                        Americano
-                                    </label>
-                                </div>
-                                <div className='flex items-start gap-x-0.5'>
-                                    <input type='radio' name='drink' className='mt-1.5' />
-                                    <label htmlFor="drink" className='text-main flex gap-x-1'>
-                                        Cortado
-                                    </label>
-                                </div>
-                                <div className="flex items-start gap-x-0.5">
-                                    <input type='radio' name='drink' className='mt-1.5' />
-                                    <label htmlFor="drink" className='text-main flex gap-x-1'>
-                                        Latte
-                                    </label>
-                                </div>
-                                <div className="flex items-start gap-x-0.5">
-                                    <input type='radio' name='drink' className='mt-1.5' />
-                                    <label htmlFor="drink" className='text-main flex gap-x-1'>
-                                        Espresso Tonic
-                                    </label>
-                                </div>
-                            </div>
-                            <div className='flex flex-col gap-y-2'>
-                                <h3 className='text-main text-xs italic'>Sin café</h3>
-                                <div className='flex items-start gap-x-0.5'>
-                                    <input type='radio' name='drink' className='mt-1.5' />
-                                    <label htmlFor="drink" className='text-main p-0 m-0'>
-                                        Chocolate
-                                    </label>
-                                </div>
-                                <div className='flex items-start gap-x-0.5'>
-                                    <input type='radio' name='drink' className='mt-1.5' />
-                                    <label htmlFor="drink" className='text-main flex gap-x-1'>
-                                        Jamaica Cold Brew
-                                    </label>
-                                </div>
-                                <div className="flex items-start gap-x-0.5">
-                                    <input type='radio' name='drink' className='mt-1.5' />
-                                    <label htmlFor="drink" className='text-main flex gap-x-1'>
-                                        Chai Latte
-                                    </label>
-                                </div>
-                                <div className="flex items-start gap-x-0.5">
-                                    <input type='radio' name='drink' className='mt-1.5' />
-                                    <label htmlFor="drink" className='text-main flex gap-x-1'>
-                                        Limonada
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                    {/* Milk choice */}
-                    <div>
-                        <h2 className='text-main text-md font-semibold'>Con que leche lo tomas?</h2>
-                        <label htmlFor="milk" className='text-main flex gap-x-1'>
-                            <input type='radio' name='milk' defaultChecked />
-                            Entera
-                        </label>
-                        <label htmlFor="milk" className='text-main flex gap-x-1'>
-                            <input type='radio' name='milk' defaultChecked />
-                            Deslactosada light
-                        </label>
-                        <label htmlFor="milk" className='text-main flex gap-x-1'>
-                            <input type='radio' name='milk' defaultChecked />
-                            Avena
-                        </label>
-                    </div>
-                    {/* Add-ons (syrups) */}
-                    <div>
-                        <label htmlFor="drink" className='text-main flex gap-x-1'>
-                            <input type='radio' name='drink' className='' />
-                            Hufflepuff
-                        </label>
-                    </div>
-                </form>
-            </div>
+            {
+                // Step 1. Base drink
+                currentStep === 'baseDrink' && <BaseDrink name={name} nextStep={handleNextStep} value={formData.selectedDrink} updateValue={updateFormData} baseDrinkChange={handleBaseDrinkChange} choseMilkDrink={formData.milkDrink} />
+            }
+            {
+                // Step 2. Milk choice - optional
+                currentStep === 'milkChoice' && <MilkChoice nextStep={handleNextStep} previousStep={handlePreviousStep} value={formData.milkChoice} updateValue={updateFormData} hotAndCold={formData.hotAndCold} />
+            }
+            {
+                //Step 3. Temperature - optional
+                currentStep === 'temperature' && formData.hotAndCold && <HotOrCold nextStep={handleNextStep} previousStep={handlePreviousStep} hotAndCold={formData.hotAndCold} updateValue={updateFormData} value={formData.temperature} hasAddOns={formData.hasAddOns} />
+            }
+            {
+                currentStep === 'addOns' && formData.hasAddOns && (<AddOns previousStep={handlePreviousStep} nextStep={handleNextStep} toggleCustomization={toggleCustomization} values={formData.customizations} hotAndCold={formData.hotAndCold} />)
+            }
+            {
+                currentStep === 'confirm' && formData.selectedDrink && <ConfirmOrder temperature={formData.temperature} milkChoice={formData.milkChoice} selectedDrink={formData.selectedDrink} customizations={formData.customizations} previousStep={handlePreviousStep} name={name} />
+            }
+            {
+                currentStep === 'allDone' && <AllDone />
+            }
         </div>
     )
 }
+

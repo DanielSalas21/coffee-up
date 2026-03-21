@@ -14,10 +14,25 @@ export async function getOrder(name: string) {
     })
 }
 
-// export async function createOrder(data: {}) {
-//     const { ...rest } = data
+export async function createOrder(data: {
+    name: string;
+    selectedDrink: string;
+    customizations: string[];
+    temperature: string | null;
+    milkChoice: string | null;
+}) {
+    const { name, ...rest } = data
 
-//     return await prisma.order.create({
-//         data
-//     })
-// }
+    const { id } = await prisma.user.findUniqueOrThrow({
+        where: {
+            name
+        }
+    })
+
+    return await prisma.order.create({
+        data: {
+            userId: id,
+            ...rest
+        }
+    })
+}
